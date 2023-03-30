@@ -1,21 +1,8 @@
-###Build Rosetta
-
-FROM node:18 as builder-rosetta
-
-WORKDIR /usr/src
-
-RUN git clone https://github.com/gear-tech/rosetta-api.git .
-
-RUN yarn install
-RUN yarn build
-
-###Build Gear
-
-FROM amazonlinux:latest as builder-gear
+FROM ubuntu:22.10 as builder-gear
 ARG PROFILE=production
 
 # Install dependecies
-RUN yum update -y && yum install -y clang gcc git gzip make tar wget unzip
+RUN apt update -y && apt install -y clang gcc git gzip make tar wget unzip
 
 RUN git clone https://github.com/gear-tech/gear.git
 
@@ -61,7 +48,6 @@ RUN apt remove yarn -y
 RUN npm install -g yarn
 RUN apt install supervisor -y
 
-COPY --from=builder-rosetta /usr/src /opt/rosetta-api
 ARG PROFILE=production
 COPY --from=builder-gear /gear/target/$PROFILE/gear /usr/local/bin
 RUN useradd -m -u 1000 -U -s /bin/sh -d /gear gear && \
