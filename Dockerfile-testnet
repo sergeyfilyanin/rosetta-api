@@ -2,7 +2,7 @@ FROM ubuntu:22.10 as builder-gear
 ARG PROFILE=production
 
 # Install dependecies
-RUN apt update -y && apt install -y clang gcc git gzip make tar wget unzip
+RUN apt update -y && apt install -y clang gcc git gzip make tar wget unzip curl
 
 RUN git clone https://github.com/gear-tech/gear.git
 
