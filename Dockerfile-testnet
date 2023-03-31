@@ -29,7 +29,7 @@ ENV PATH="/root/.cargo/bin:$PATH"
 RUN rustup default stable
 RUN cargo --version
 RUN rustc --version
-RUN rustup update nightly && rustup target add wasm32-unknown-unknown --toolchain nightly
+RUN rustup update nightly && rustup target add wasm32-unknown-unknown --toolchain nightly-2023-03-14
 
 # Build
 RUN cargo build -p gear-cli --profile $PROFILE
